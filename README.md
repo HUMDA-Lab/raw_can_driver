@@ -1,4 +1,4 @@
-# Raw Can Driver
+# Raw Can Driver 
 
 A ROS2 driver for receiving and sending raw CAN messages on any number of CAN interfaces. Provides a more robust and flexible alternative to the `socketcan_bridge` package with less CPU overhead and better error frame handling.
 
