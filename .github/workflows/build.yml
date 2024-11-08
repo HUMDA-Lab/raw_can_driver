@@ -1,0 +1,29 @@
+name: Build
+
+on:
+  workflow_dispatch:
+  pull_request:
+    types: [synchronize]
+jobs:
+  build:
+    name: build
+    runs-on: self-hosted
+    steps:
+    - name: get app token
+      uses: actions/create-github-app-token@v1
+      id: app-token
+      with:
+        app-id: ${{ secrets.HUMDA_APP_ID }}
+        private-key: ${{ secrets.HUMDA_APP_KEY }}
+        owner: ${{ github.repository_owner }}
+    - name: Trigger Releases build workflow
+      uses: actions/github-script@v7
+      with:
+        github-token: ${{ steps.app-token.outputs.token }}
+        script: |
+          await github.rest.actions.createWorkflowDispatch({
+            owner: 'HUMDA-Lab',
+            repo: 'humda_stack_workspace',
+            workflow_id: 'build.yml',
+            ref: '${{ github.head_ref }}'
+          });
