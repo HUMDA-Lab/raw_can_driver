@@ -1,4 +1,4 @@
-# Raw Can Driver
+# Raw Can Driver  [![Build](https://github.com/HUMDA-Lab/raw_can_driver/actions/workflows/build.yml/badge.svg)](https://github.com/HUMDA-Lab/raw_can_driver/actions/workflows/build.yml)
 
 A ROS2 driver for receiving and sending raw CAN messages on any number of CAN interfaces. Provides a more robust and flexible alternative to the `socketcan_bridge` package with less CPU overhead and better error frame handling.
 
