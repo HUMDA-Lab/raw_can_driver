@@ -10,7 +10,7 @@ The driver can be started with the following command:
 ros2 run raw_can_driver raw_can_driver --params --ros-args -p interfaces:="[can0, can1]"
 ```
 
-The `interfaces` parameter is a list of CAN interfaces that the driver should listen to. The driver will listen to all interfaces specified in the list and publish any received messages on the `/raw_can_driver/<interface_name>/received_messages` topic. The driver will also listen to messages on the `/raw_can_driver/<interface_name>/send_messages` topic and send any received messages on the specified interface.
+The `interfaces` parameter is a list of CAN interfaces that the driver should listen to. The driver will listen to all interfaces specified in the list and publish any received messages on the `/raw_can_driver/<interface_name>/received_messages` topic. The driver will also listen to messages on the `/raw_can_driver/<interface_name>/sent_messages` topic and send any received messages on the specified interface.
 
 The topics are of type `can_msgs/msg/Frame`  and have the [following structure](https://github.com/ros-industrial/ros_canopen/blob/melodic-devel/can_msgs/msg/Frame.msg):
 
