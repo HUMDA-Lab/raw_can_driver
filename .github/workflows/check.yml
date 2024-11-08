@@ -1,0 +1,37 @@
+name: Check
+
+on:
+  workflow_dispatch:
+  pull_request:
+    types: [opened, synchronize]
+jobs:
+  check:
+    permissions:
+      pull-requests: write
+      contents: read
+      checks: write
+    name: check
+    runs-on: self-hosted
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: CppCheck
+        uses: Konstantin343/cppcheck-annotation-action@v1.0
+        with:
+          std: c++20
+          platform: unix64
+          json-results-file: cppcheck.json
+      - name: CppCheck annotations
+        uses: yuzutech/annotations-action@v0.5.0
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          title: CppCheck
+          input: cppcheck.json
+      - name: Setup ReviewDog
+        uses: reviewdog/action-setup@v1
+        with:
+          reviewdog_version: latest
+      - name: Install CppLint
+        run: pip install cpplint
+      - name: CppLint
+        run: 'export REVIEWDOG_GITHUB_API_TOKEN="${{ secrets.GITHUB_TOKEN }}" && cpplint --recursive . 2>&1 | reviewdog -efm="%f:%l: %m" -name=CppLint -reporter=github-pr-check -filter-mode=nofilter -level=warning'
